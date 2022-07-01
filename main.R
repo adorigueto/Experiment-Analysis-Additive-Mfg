@@ -1,7 +1,7 @@
 #renv::init()
 
 # Read the file
-dados <- read.csv("C://Coding//R//03_Manufatura_aditiva//Dados.csv")
+dados <- read.csv("Dados.csv")
 dados_df <- data.frame(dados)
 dados_df
 
@@ -34,6 +34,7 @@ colnames(stat_W2) <- c("mean [um]", "max [um]", "min [um]")
 
 # Combine in one data frame with all the responses
 descrip_stat <- rbind(stat_H1, stat_H2, stat_W2)
+rownames(descrip_stat) <- c('H1', 'H2', 'W2')
 print(descrip_stat)
 
 # Evaluate the influence of the factors in each response
@@ -62,10 +63,22 @@ title(ylab = bquote("Value [um]"), line = 2.5)
 dev.off()
 
 # QQ-Norm
-png("diagnosis_plot.png", width = 2200, height = 1300, res = 300)
+png("qq-plot_H1.png", width = 2200, height = 1300, res = 300)
+par(mfrow = c(1, 1), family = "serif")
+qqnorm(residuals(model_H1))
+qqline(residuals(model_H1))
+dev.off()
+
+png("qq-plot_H2.png", width = 2200, height = 1300, res = 300)
 par(mfrow = c(1, 1), family = "serif")
 qqnorm(residuals(model_H2))
 qqline(residuals(model_H2))
+dev.off()
+
+png("qq-plot_W2.png", width = 2200, height = 1300, res = 300)
+par(mfrow = c(1, 1), family = "serif")
+qqnorm(residuals(model_W2))
+qqline(residuals(model_W2))
 dev.off()
 
 # Visual residual analysis
